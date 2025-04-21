@@ -1,0 +1,243 @@
+package game_store.Frontend.dashboard;
+
+import game_store.Frontend.Login.LOGIN;
+
+import javax.swing.*;
+import java.awt.*;
+
+public class DashboardPage extends javax.swing.JFrame {
+
+    private int userId;
+
+    public DashboardPage(int userId) {
+        this.userId = userId;
+        initComponents();
+
+        // Load images
+        loadImage(jLabel1, "C:\\Users\\rajpu\\IdeaProjects\\Java_Project\\src\\main\\java\\game_store\\Frontend\\Image_Resources\\Screenshot 2025-04-20 175539.png");
+        loadImage(jLabel2, "C:\\Users\\rajpu\\IdeaProjects\\Java_Project\\src\\main\\java\\game_store\\Frontend\\Image_Resources\\s2.png");
+        loadImage(jLabel3, "C:\\Users\\rajpu\\IdeaProjects\\Java_Project\\src\\main\\java\\game_store\\Frontend\\Image_Resources\\s3.png");
+    }
+
+    private void loadImage(JLabel label, String imagePath) {
+        ImageIcon icon = new ImageIcon(imagePath);
+        Image img = icon.getImage();
+        Image resizedImage = img.getScaledInstance(345, 141, Image.SCALE_SMOOTH);
+        label.setIcon(new ImageIcon(resizedImage));
+        label.setText("");
+    }
+
+    @SuppressWarnings("unchecked")
+    private void initComponents() {
+        jPanel1 = new javax.swing.JPanel();
+        jButton2 = new javax.swing.JButton(); // Games
+        jButton3 = new javax.swing.JButton(); // Wallet
+        jButton4 = new javax.swing.JButton(); // Friends
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton(); // Library
+        jPanel3 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton(); // Profile
+        jLabel4 = new javax.swing.JLabel();
+
+        textFieldLabel1 = new JTextField("Call Of Duty: Black OPS 3");
+        textFieldLabel2 = new JTextField("DREAM BBQ");
+        textFieldLabel3 = new JTextField("APEX : LEGENDS");
+
+        // Profile dropdown menu components
+        profileButton = new JButton("Profile");
+        profileMenu = new JPopupMenu();
+        usernameItem = new JMenuItem();
+        emailItem = new JMenuItem();
+        logoutItem = new JMenuItem("Logout");
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        // Profile Button Styling
+        profileButton.setFont(new Font("Arial", Font.BOLD, 14));
+        profileButton.setBackground(new Color(55, 123, 231));
+        profileButton.setForeground(Color.WHITE);
+        profileButton.setFocusPainted(false);
+
+        // Profile Menu Setup
+        profileMenu.add(usernameItem);
+        profileMenu.add(emailItem);
+        profileMenu.addSeparator(); // separator before logout
+        profileMenu.add(logoutItem);
+
+        // On Profile Button Click, Show Menu
+        profileButton.addActionListener(e -> profileMenu.show(profileButton, 0, profileButton.getHeight()));
+
+        // Logout Action
+        logoutItem.addActionListener(e -> {
+            dispose(); // Close current dashboard
+            new LOGIN().setVisible(true); // Redirect to login page
+        });
+
+        // Set User Info dynamically (Replace these with actual user data from DB)
+        usernameItem.setText("Username: " + "User_" + userId); // Replace with actual username
+        emailItem.setText("Email: " + "user@example.com"); // Replace with actual email
+
+        jPanel1.setBackground(new java.awt.Color(104, 129, 210));
+
+        jButton2.setText("Games");
+        jButton2.addActionListener(evt -> openGamesList());
+
+        jButton3.setText("Wallet");
+        jButton3.addActionListener(evt -> openWalletPage());
+
+        jButton4.setText("Friends");
+        jButton4.addActionListener(e -> {
+            FriendsPage friendsPage = new FriendsPage(userId);
+            friendsPage.setVisible(true);
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+                jPanel1Layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(60, Short.MAX_VALUE))
+        ;
+        jPanel1Layout.setVerticalGroup(
+                jPanel1Layout.createSequentialGroup()
+                        .addGap(99, 99, 99)
+                        .addComponent(jButton2)
+                        .addGap(29, 29, 29)
+                        .addComponent(jButton3)
+                        .addGap(34, 34, 34)
+                        .addComponent(jButton4)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        ;
+
+        jPanel2.setBackground(new java.awt.Color(42, 42, 51));
+        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        configureTextField(textFieldLabel1);
+        configureTextField(textFieldLabel2);
+        configureTextField(textFieldLabel3);
+
+        jButton5.setBackground(new java.awt.Color(255, 102, 102));
+        jButton5.setText("Library");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                new GameLib(userId).setVisible(true);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+                jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(208)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(textFieldLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(textFieldLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(textFieldLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(342)
+                                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(215, Short.MAX_VALUE)
+        );
+
+        jPanel2Layout.setVerticalGroup(
+                jPanel2Layout.createSequentialGroup()
+                        .addGap(14)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20)
+                        .addComponent(textFieldLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20)
+                        .addComponent(textFieldLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20)
+                        .addComponent(textFieldLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(60)
+                        .addComponent(jButton5)
+                        .addContainerGap()
+        );
+
+        jPanel3.setBackground(new java.awt.Color(104, 129, 210));
+        jButton1.setText("Profile");
+        jButton1.addActionListener(e -> profileMenu.show(jButton1, 0, jButton1.getHeight())); // Show profile menu on button click
+
+        // Adding profileButton to panel3
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+                jPanel3Layout.createSequentialGroup()
+                        .addContainerGap(9, Short.MAX_VALUE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                        .addComponent(profileButton, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(10))
+                        )
+        );
+        jPanel3Layout.setVerticalGroup(
+                jPanel3Layout.createSequentialGroup()
+                        .addGap(9)
+                        .addComponent(profileButton)
+                        .addGap(12)
+        );
+
+        // Main Layout
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+                layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        layout.setVerticalGroup(
+                layout.createSequentialGroup()
+                        .addComponent(jPanel1)
+                        .addComponent(jPanel2)
+                        .addComponent(jPanel3)
+        );
+        pack();
+    }
+
+    private void openGamesList() {
+        // Implement games list opening logic
+    }
+
+    private void openWalletPage() {
+        // Implement wallet page opening logic
+    }
+
+    private void configureTextField(JTextField textField) {
+        textField.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        textField.setBackground(new Color(85, 102, 119));
+        textField.setForeground(Color.WHITE);
+        textField.setEditable(false);
+    }
+
+    // Main method to run the dashboard
+    public static void main(String[] args) {
+        new DashboardPage(1).setVisible(true);
+    }
+
+    // Variables declaration
+    private javax.swing.JButton jButton1, jButton2, jButton3, jButton4, jButton5;
+    private javax.swing.JLabel jLabel1, jLabel2, jLabel3, jLabel4;
+    private javax.swing.JPanel jPanel1, jPanel2, jPanel3;
+    private JTextField textFieldLabel1, textFieldLabel2, textFieldLabel3;
+    private JButton profileButton;
+    private JPopupMenu profileMenu;
+    private JMenuItem usernameItem, emailItem, logoutItem;
+}
