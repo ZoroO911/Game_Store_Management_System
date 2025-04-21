@@ -1,9 +1,8 @@
 package game_store.Frontend.dashboard;
 
-import game_store.Frontend.Login.LOGIN;
-
 import javax.swing.*;
 import java.awt.*;
+import game_store.Frontend.Login.LOGIN;
 
 public class DashboardPage extends javax.swing.JFrame {
 
@@ -17,6 +16,7 @@ public class DashboardPage extends javax.swing.JFrame {
         loadImage(jLabel1, "C:\\Users\\rajpu\\IdeaProjects\\Java_Project\\src\\main\\java\\game_store\\Frontend\\Image_Resources\\Screenshot 2025-04-20 175539.png");
         loadImage(jLabel2, "C:\\Users\\rajpu\\IdeaProjects\\Java_Project\\src\\main\\java\\game_store\\Frontend\\Image_Resources\\s2.png");
         loadImage(jLabel3, "C:\\Users\\rajpu\\IdeaProjects\\Java_Project\\src\\main\\java\\game_store\\Frontend\\Image_Resources\\s3.png");
+        loadImage(jLabel4, "C:\\Users\\rajpu\\IdeaProjects\\Java_Project\\src\\main\\java\\game_store\\Frontend\\Image_Resources\\b1.png");
     }
 
     private void loadImage(JLabel label, String imagePath) {
@@ -39,46 +39,12 @@ public class DashboardPage extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton(); // Library
         jPanel3 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton(); // Profile
-        jLabel4 = new javax.swing.JLabel();
-
+        jLabel4 = new javax.swing.JLabel(); // Profile image label
         textFieldLabel1 = new JTextField("Call Of Duty: Black OPS 3");
         textFieldLabel2 = new JTextField("DREAM BBQ");
         textFieldLabel3 = new JTextField("APEX : LEGENDS");
 
-        // Profile dropdown menu components
-        profileButton = new JButton("Profile");
-        profileMenu = new JPopupMenu();
-        usernameItem = new JMenuItem();
-        emailItem = new JMenuItem();
-        logoutItem = new JMenuItem("Logout");
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        // Profile Button Styling
-        profileButton.setFont(new Font("Arial", Font.BOLD, 14));
-        profileButton.setBackground(new Color(55, 123, 231));
-        profileButton.setForeground(Color.WHITE);
-        profileButton.setFocusPainted(false);
-
-        // Profile Menu Setup
-        profileMenu.add(usernameItem);
-        profileMenu.add(emailItem);
-        profileMenu.addSeparator(); // separator before logout
-        profileMenu.add(logoutItem);
-
-        // On Profile Button Click, Show Menu
-        profileButton.addActionListener(e -> profileMenu.show(profileButton, 0, profileButton.getHeight()));
-
-        // Logout Action
-        logoutItem.addActionListener(e -> {
-            dispose(); // Close current dashboard
-            new LOGIN().setVisible(true); // Redirect to login page
-        });
-
-        // Set User Info dynamically (Replace these with actual user data from DB)
-        usernameItem.setText("Username: " + "User_" + userId); // Replace with actual username
-        emailItem.setText("Email: " + "user@example.com"); // Replace with actual email
 
         jPanel1.setBackground(new java.awt.Color(104, 129, 210));
 
@@ -97,24 +63,26 @@ public class DashboardPage extends javax.swing.JFrame {
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
-                jPanel1Layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
-                                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap(60, Short.MAX_VALUE))
-        ;
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(44, 44, 44)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addContainerGap(60, Short.MAX_VALUE))
+        );
         jPanel1Layout.setVerticalGroup(
-                jPanel1Layout.createSequentialGroup()
-                        .addGap(99, 99, 99)
-                        .addComponent(jButton2)
-                        .addGap(29, 29, 29)
-                        .addComponent(jButton3)
-                        .addGap(34, 34, 34)
-                        .addComponent(jButton4)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        ;
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(99, 99, 99)
+                                .addComponent(jButton2)
+                                .addGap(29, 29, 29)
+                                .addComponent(jButton3)
+                                .addGap(34, 34, 34)
+                                .addComponent(jButton4)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         jPanel2.setBackground(new java.awt.Color(42, 42, 51));
         jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -171,10 +139,29 @@ public class DashboardPage extends javax.swing.JFrame {
         );
 
         jPanel3.setBackground(new java.awt.Color(104, 129, 210));
-        jButton1.setText("Profile");
-        jButton1.addActionListener(e -> profileMenu.show(jButton1, 0, jButton1.getHeight())); // Show profile menu on button click
+        jLabel4.setText("Profile Label"); //profile wala
+        jLabel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        // Adding profileButton to panel3
+        // Dropdown setup for Profile button
+        JButton profileButton = new JButton("Profile");
+        JPopupMenu profileMenu = new JPopupMenu();
+        JMenuItem logoutItem = new JMenuItem("Logout");
+        JMenuItem userDetailsItem = new JMenuItem("User Details");
+
+        logoutItem.addActionListener(e -> {
+            dispose(); // Close dashboard
+            new LOGIN().setVisible(true); // Open login page
+        });
+
+        userDetailsItem.addActionListener(e -> {
+            JOptionPane.showMessageDialog(this, "User ID: " + userId);
+        });
+
+        profileMenu.add(userDetailsItem);
+        profileMenu.add(logoutItem);
+
+        profileButton.addActionListener(e -> profileMenu.show(profileButton, 0, profileButton.getHeight()));
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -182,62 +169,76 @@ public class DashboardPage extends javax.swing.JFrame {
                         .addContainerGap(9, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                        .addComponent(profileButton, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(10))
-                        )
+                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(19))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                        .addComponent(profileButton, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addContainerGap()))
         );
         jPanel3Layout.setVerticalGroup(
                 jPanel3Layout.createSequentialGroup()
                         .addGap(9)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(profileButton)
-                        .addGap(12)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        // Main Layout
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
-                layout.createSequentialGroup()
-                        .addComponent(jPanel1)
-                        .addComponent(jPanel2)
-                        .addComponent(jPanel3)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
+
         pack();
     }
 
+    private void configureTextField(JTextField textField) {
+        textField.setEditable(false);
+        textField.setBackground(Color.LIGHT_GRAY);
+        textField.setHorizontalAlignment(JTextField.CENTER);
+    }
+
     private void openGamesList() {
-        // Implement games list opening logic
+        GamesListPage gamesListPage = new GamesListPage(userId);
+        gamesListPage.setVisible(true);
+        dispose();
     }
 
     private void openWalletPage() {
-        // Implement wallet page opening logic
+        WalletPage walletPage = new WalletPage(userId);
+        walletPage.setVisible(true);
+        dispose();
     }
 
-    private void configureTextField(JTextField textField) {
-        textField.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        textField.setBackground(new Color(85, 102, 119));
-        textField.setForeground(Color.WHITE);
-        textField.setEditable(false);
+    public static void main(String args[]) {
+        int userId = 101; // Replace with actual user ID
+        java.awt.EventQueue.invokeLater(() -> new DashboardPage(userId).setVisible(true));
     }
 
-    // Main method to run the dashboard
-    public static void main(String[] args) {
-        new DashboardPage(1).setVisible(true);
-    }
-
-    // Variables declaration
-    private javax.swing.JButton jButton1, jButton2, jButton3, jButton4, jButton5;
-    private javax.swing.JLabel jLabel1, jLabel2, jLabel3, jLabel4;
-    private javax.swing.JPanel jPanel1, jPanel2, jPanel3;
-    private JTextField textFieldLabel1, textFieldLabel2, textFieldLabel3;
-    private JButton profileButton;
-    private JPopupMenu profileMenu;
-    private JMenuItem usernameItem, emailItem, logoutItem;
+    // Variables
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private JTextField textFieldLabel1;
+    private JTextField textFieldLabel2;
+    private JTextField textFieldLabel3;
 }
