@@ -4,6 +4,8 @@ import game_store.backend.services.FriendService;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.util.List;
 
@@ -20,100 +22,83 @@ public class FriendsPage extends JFrame {
         this.userId = userId;
 
         setTitle("Your Friends");
-        setSize(600, 400);
+        setSize(750, 400);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
-        getContentPane().setBackground(new Color(240, 240, 240));  // Light background color for better UI
+        getContentPane().setBackground(new Color(240, 240, 240));
 
-        // Header Panel for Page Title
+        // Header Panel
         JPanel headerPanel = new JPanel();
-        headerPanel.setBackground(new Color(55, 123, 231)); // Light blue color
+        headerPanel.setBackground(new Color(55, 123, 231));
         JLabel headerLabel = new JLabel("Your Friend List", SwingConstants.CENTER);
         headerLabel.setFont(new Font("Arial", Font.BOLD, 20));
         headerLabel.setForeground(Color.WHITE);
         headerPanel.add(headerLabel);
-
         add(headerPanel, BorderLayout.NORTH);
 
-        // Initialize table model
+        // Table setup
         tableModel.addColumn("Friend's Username");
         tableModel.addColumn("Friendship Date");
+        tableModel.addColumn("Action");
 
-        // Friend Table Panel
-        JPanel tablePanel = new JPanel();
-        tablePanel.setLayout(new BorderLayout());
-        tablePanel.setBackground(new Color(255, 255, 255));
-
-        // JTable to display friends and their Friendship Date
-        friendTable.setModel(tableModel);
         friendTable.setFont(new Font("Arial", Font.PLAIN, 14));
-        friendTable.setBackground(new Color(245, 245, 245));  // Light background for the table
-        friendTable.setForeground(new Color(55, 123, 231)); // Blue text color for friends
         friendTable.setRowHeight(30);
+        friendTable.setBackground(new Color(245, 245, 245));
+        friendTable.setForeground(new Color(55, 123, 231));
+
         JScrollPane tableScrollPane = new JScrollPane(friendTable);
-        tablePanel.add(tableScrollPane, BorderLayout.CENTER);
+        add(tableScrollPane, BorderLayout.CENTER);
 
-        // Input Panel to add new friends
-        JPanel inputPanel = new JPanel();
-        inputPanel.setBackground(new Color(255, 255, 255)); // White background for the input area
-        inputPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        // Add custom renderer and editor for remove button
+        friendTable.getColumnModel().getColumn(2).setCellRenderer(new ButtonRenderer());
+        friendTable.getColumnModel().getColumn(2).setCellEditor(new ButtonEditor(new JCheckBox()));
 
-        JLabel addFriendLabel = new JLabel("Add Friend (Username):");
-        addFriendLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-        inputPanel.add(addFriendLabel);
+        // Input Panel with Add + Back buttons
+        JPanel inputPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        inputPanel.setBackground(Color.WHITE);
+
+        inputPanel.add(new JLabel("Friend Username:"));
 
         addFriendField.setPreferredSize(new Dimension(150, 25));
         inputPanel.add(addFriendField);
 
-        addButton.setBackground(new Color(55, 123, 231)); // Blue button
-        addButton.setForeground(Color.WHITE);  // White text on blue button
+        addButton.setBackground(new Color(55, 123, 231));
+        addButton.setForeground(Color.WHITE);
         addButton.setFont(new Font("Arial", Font.BOLD, 14));
         addButton.setPreferredSize(new Dimension(130, 30));
         inputPanel.add(addButton);
 
-        // Back Button Section
-        JPanel backButtonPanel = new JPanel();
-        backButtonPanel.setBackground(new Color(255, 255, 255));  // White background
-        backButtonPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-
-        backButton.setBackground(new Color(255, 0, 0));  // Red back button
+        backButton.setBackground(new Color(255, 0, 0));
         backButton.setForeground(Color.WHITE);
         backButton.setFont(new Font("Arial", Font.BOLD, 14));
-        backButton.setPreferredSize(new Dimension(130, 30));
-        backButtonPanel.add(backButton);
+        backButton.setPreferredSize(new Dimension(170, 30));
+        inputPanel.add(backButton);
+
+        add(inputPanel, BorderLayout.SOUTH);
 
         // Action listeners
         addButton.addActionListener(e -> {
             addFriend();
-            loadFriends();  // Refresh the list after adding a friend
+            loadFriends();
         });
 
         backButton.addActionListener(e -> {
-            this.dispose();  // Close the current window
-            new DashboardPage(userId).setVisible(true);  // Open the DashboardPage
+            this.dispose();
+            new DashboardPage(userId).setVisible(true);
         });
 
-        add(backButtonPanel, BorderLayout.SOUTH);
-        add(inputPanel, BorderLayout.SOUTH);
-        add(tablePanel, BorderLayout.CENTER);
-
-        loadFriends();  // Load friends on startup
+        loadFriends();
     }
 
-    // Load and display the list of friends with their friendship date
     private void loadFriends() {
-        tableModel.setRowCount(0);  // Clear the table
-
+        tableModel.setRowCount(0);
         List<String[]> friends = friendService.getFriends(userId);
-
         for (String[] friend : friends) {
-            // Add each friend's username and their friendship date to the table
-            tableModel.addRow(friend);
+            tableModel.addRow(new Object[]{friend[0], friend[1], "Remove"});
         }
     }
 
-    // Add a new friend based on the username input
     private void addFriend() {
         String friendUsername = addFriendField.getText().trim();
         if (friendUsername.isEmpty()) {
@@ -131,8 +116,70 @@ public class FriendsPage extends JFrame {
         }
     }
 
+    // ButtonRenderer for JTable
+    class ButtonRenderer extends JButton implements TableCellRenderer {
+        public ButtonRenderer() {
+            setOpaque(true);
+            setForeground(Color.WHITE);
+            setBackground(new Color(255, 51, 51));
+        }
+
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                                                       boolean isSelected, boolean hasFocus,
+                                                       int row, int column) {
+            setText((value == null) ? "" : value.toString());
+            return this;
+        }
+    }
+
+    // ButtonEditor for JTable
+    class ButtonEditor extends DefaultCellEditor {
+        private final JButton button = new JButton("Remove");
+        private String username;
+        private boolean clicked;
+
+        public ButtonEditor(JCheckBox checkBox) {
+            super(checkBox);
+            button.setBackground(new Color(255, 51, 51));
+            button.setForeground(Color.WHITE);
+            button.setOpaque(true);
+
+            button.addActionListener(e -> fireEditingStopped());
+        }
+
+        public Component getTableCellEditorComponent(JTable table, Object value,
+                                                     boolean isSelected, int row, int column) {
+            username = (String) table.getValueAt(row, 0);
+            button.setText("Remove");
+            clicked = true;
+            return button;
+        }
+
+        public Object getCellEditorValue() {
+            if (clicked) {
+                int confirm = JOptionPane.showConfirmDialog(null,
+                        "Are you sure you want to remove " + username + "?",
+                        "Confirm Remove", JOptionPane.YES_NO_OPTION);
+                if (confirm == JOptionPane.YES_OPTION) {
+                    friendService.removeFriend(userId, username);
+                    loadFriends();
+                }
+            }
+            clicked = false;
+            return "Remove";
+        }
+
+        public boolean stopCellEditing() {
+            clicked = false;
+            return super.stopCellEditing();
+        }
+
+        protected void fireEditingStopped() {
+            super.fireEditingStopped();
+        }
+    }
+
     public static void main(String[] args) {
-        // Use an actual userId when calling
         SwingUtilities.invokeLater(() -> new FriendsPage(101).setVisible(true));
     }
 }
