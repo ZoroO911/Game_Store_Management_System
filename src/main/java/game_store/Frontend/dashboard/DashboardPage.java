@@ -13,10 +13,10 @@ public class DashboardPage extends javax.swing.JFrame {
         initComponents();
 
         // Load images
-        loadImage(jLabel1, "C:\\Users\\rajpu\\IdeaProjects\\Java_Project\\src\\main\\java\\game_store\\Frontend\\Image_Resources\\Screenshot 2025-04-20 175539.png");
-        loadImage(jLabel2, "C:\\Users\\rajpu\\IdeaProjects\\Java_Project\\src\\main\\java\\game_store\\Frontend\\Image_Resources\\s2.png");
-        loadImage(jLabel3, "C:\\Users\\rajpu\\IdeaProjects\\Java_Project\\src\\main\\java\\game_store\\Frontend\\Image_Resources\\s3.png");
-        loadImage(jLabel4, "C:\\Users\\rajpu\\IdeaProjects\\Java_Project\\src\\main\\java\\game_store\\Frontend\\Image_Resources\\b1.png");
+        loadImage(jLabel1, "C:\\Users\\obera\\OneDrive\\Desktop\\sem4\\Flexi project\\Game_Store_Management_System\\src\\main\\java\\game_store\\Frontend\\Image_Resources\\Screenshot 2025-04-20 175539.png");
+        loadImage(jLabel2, "C:\\Users\\obera\\OneDrive\\Desktop\\sem4\\Flexi project\\Game_Store_Management_System\\src\\main\\java\\game_store\\Frontend\\Image_Resources\\s2.png");
+        loadImage(jLabel3, "C:\\Users\\obera\\OneDrive\\Desktop\\sem4\\Flexi project\\Game_Store_Management_System\\src\\main\\java\\game_store\\Frontend\\Image_Resources\\s3.png");
+        loadImage(jLabel4, "C:\\Users\\obera\\OneDrive\\Desktop\\sem4\\Flexi project\\Game_Store_Management_System\\src\\main\\java\\game_store\\Frontend\\Image_Resources\\b1.png");
     }
 
     private void loadImage(JLabel label, String imagePath) {
@@ -58,6 +58,7 @@ public class DashboardPage extends javax.swing.JFrame {
         jButton4.addActionListener(e -> {
             FriendsPage friendsPage = new FriendsPage(userId);
             friendsPage.setVisible(true);
+            dispose();
         });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

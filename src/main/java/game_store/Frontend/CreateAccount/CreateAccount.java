@@ -5,8 +5,6 @@ import game_store.backend.services.CreateAccountService;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
 public class CreateAccount extends JFrame {
@@ -83,8 +81,10 @@ public class CreateAccount extends JFrame {
             return;
         }
 
-        if (!email.matches("^[\\w.-]+@[\\w.-]+\\.\\w+$")) {
-            JOptionPane.showMessageDialog(this, "Invalid email format.", "Error", JOptionPane.ERROR_MESSAGE);
+        // Email validation: exactly one @ and only one . after @
+        String[] emailParts = email.split("@");
+        if (emailParts.length != 2 || emailParts[1].split("\\.").length != 2) {
+            JOptionPane.showMessageDialog(this, "Invalid email format. Use format like user@example.com", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 

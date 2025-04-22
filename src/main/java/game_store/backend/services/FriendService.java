@@ -34,6 +34,34 @@ public class FriendService {
         }
         return friends;
     }
+    // Remove a friend
+    public boolean removeFriend(int userId, String friendUsername) {
+        try (Connection conn = DBConnection.getConnection()) {
+            // Get friend's user ID
+            String getIdQuery = "SELECT UserID FROM Users WHERE Username = ?";
+            PreparedStatement getIdStmt = conn.prepareStatement(getIdQuery);
+            getIdStmt.setString(1, friendUsername);
+            ResultSet rs = getIdStmt.executeQuery();
+
+            if (rs.next()) {
+                int friendId = rs.getInt("UserID");
+
+                // Delete from Friends table
+                String deleteQuery = "DELETE FROM Friends WHERE (UserID1 = ? AND UserID2 = ?) OR (UserID1 = ? AND UserID2 = ?)";
+                PreparedStatement deleteStmt = conn.prepareStatement(deleteQuery);
+                deleteStmt.setInt(1, userId);
+                deleteStmt.setInt(2, friendId);
+                deleteStmt.setInt(3, friendId);
+                deleteStmt.setInt(4, userId);
+                int rowsAffected = deleteStmt.executeUpdate();
+
+                return rowsAffected > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
     // Add a friend based on the username and return true if added
     public boolean addFriend(int userId, String friendUsername) {
